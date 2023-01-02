@@ -22,3 +22,11 @@ stages:
        command: 'build'
        projects: '**/*.csproj'
        workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: True
