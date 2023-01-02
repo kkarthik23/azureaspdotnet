@@ -22,13 +22,6 @@ stages:
     steps:
     - script: echo Hello, world!
       displayName: 'Run a one-line script'
-
-    - task: DotNetCoreCLI@2
-      inputs:
-       command: 'build'
-       projects: '**/*.csproj'
-       workingDirectory: '$(System.DefaultWorkingDirectory)'
-
       # Prepare Analysis Configuration task
     - task: SonarQubePrepare@5
       inputs:
@@ -36,6 +29,13 @@ stages:
           scannerMode: 'MSBuild'
           projectKey: 'kk'
 
+    - task: DotNetCoreCLI@2
+      inputs:
+       command: 'build'
+       projects: '**/*.csproj'
+       workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+    
         # Run Code Analysis task
     - task: SonarQubeAnalyze@5
 
