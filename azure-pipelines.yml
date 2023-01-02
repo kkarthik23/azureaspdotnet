@@ -9,6 +9,7 @@ trigger:
 variables:
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: 'Test'
+  buildConfiguration: 'Release'
 
 
 stages:
@@ -35,12 +36,12 @@ stages:
       vmImage: ubuntu-latest
 
     steps:
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'dotnet build $(buildConfiguration)'
     - task: DotNetCoreCLI@2
       inputs:
-        command: publish
-        publishWebProjects: True
-        arguments: '--configuration $(BuildConfiguration) --output $(Build.DefaultWorkingDirectory)'
-        zipAfterPublish: True
+       command: 'publish'
+       publishWebProjects: true
     - task: AzureWebApp@1
       inputs:
         azureSubscription: $(azureSubscription)
