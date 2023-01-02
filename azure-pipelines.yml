@@ -38,7 +38,9 @@ stages:
        workingDirectory: '$(System.DefaultWorkingDirectory)'
       
     - task: SonarCloudAnalyze@1
-  
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
 
 
 
