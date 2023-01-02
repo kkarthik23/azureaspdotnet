@@ -32,7 +32,7 @@ stages:
       # Prepare Analysis Configuration task
     - task: SonarQubePrepare@5
       inputs:
-          SonarQube: 'https://sonarcloud.io'
+          SonarQube: 'SONAR_TOKEN'
           scannerMode: 'MSBuild'
           projectKey: 'kk'
 
