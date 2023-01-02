@@ -28,7 +28,7 @@ stages:
         scannerMode: 'MSBuild'
         SonarCloud: 'SonarCloud'
         organization: kk
-        projectKey: kk
+        projectKey: dottest
     
 
     - task: DotNetCoreCLI@2
