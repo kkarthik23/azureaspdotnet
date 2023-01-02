@@ -23,26 +23,22 @@ stages:
     - script: echo Hello, world!
       displayName: 'Run a one-line script'
       # Prepare Analysis Configuration task
-    - task: SonarQubePrepare@5
+    - task: SonarCloudPrepare@1
       inputs:
-          SonarQube: SONAR_TOKEN
-          scannerMode: 'MSBuild'
-          projectKey: 'kk'
+        scannerMode: 'MSBuild'
+        SonarCloud: 'SONAR_TOKEN'
+        organization: kk
+      
+    
 
     - task: DotNetCoreCLI@2
       inputs:
        command: 'build'
        projects: '**/*.csproj'
        workingDirectory: '$(System.DefaultWorkingDirectory)'
-
-    
-        # Run Code Analysis task
-    - task: SonarQubeAnalyze@5
-
-      # Publish Quality Gate Result task
-    - task: SonarQubePublish@5
-      inputs:
-          pollingTimeoutSec: '300'
+      
+    - task: SonarCloudAnalyze@1
+  
 
 
 
