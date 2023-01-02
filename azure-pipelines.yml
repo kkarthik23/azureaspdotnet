@@ -43,9 +43,10 @@ stages:
         pollingTimeoutSec: '300'
 
 
-
-
 - stage: Deploy
+  displayName: 'Deploy Web App'
+  dependsOn: Build
+  condition: succeeded()
   jobs:
   - job: deploy
     pool:
