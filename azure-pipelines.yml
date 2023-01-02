@@ -6,6 +6,11 @@
 trigger:
 - master
 
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: 'Test'
+
+
 stages:
 - stage: Build
   jobs:
@@ -23,10 +28,22 @@ stages:
        projects: '**/*.csproj'
        workingDirectory: '$(System.DefaultWorkingDirectory)'
 
+- stage: Deploy
+  jobs:
+  - job: deploy
+    pool:
+      vmImage: ubuntu-latest
 
+    steps:
     - task: DotNetCoreCLI@2
       inputs:
         command: publish
         publishWebProjects: True
         arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
         zipAfterPublish: True
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appType: 'webAppLinux'
+        appName: 'aspdotnetapp'
+        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
