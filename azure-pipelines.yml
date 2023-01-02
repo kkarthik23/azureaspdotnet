@@ -29,6 +29,24 @@ stages:
        projects: '**/*.csproj'
        workingDirectory: '$(System.DefaultWorkingDirectory)'
 
+      # Prepare Analysis Configuration task
+    - task: SonarQubePrepare@5
+      inputs:
+          SonarQube: 'https://sonarcloud.io'
+          scannerMode: 'MSBuild'
+          projectKey: 'kk'
+
+        # Run Code Analysis task
+    - task: SonarQubeAnalyze@5
+
+      # Publish Quality Gate Result task
+    - task: SonarQubePublish@5
+      inputs:
+          pollingTimeoutSec: '300'
+
+
+
+
 - stage: Deploy
   jobs:
   - job: deploy
