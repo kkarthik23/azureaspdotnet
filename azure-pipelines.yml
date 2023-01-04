@@ -65,7 +65,7 @@ stages:
         azureSubscription: $(azureSubscription)
         ScriptType: 'InlineScript'
         Inline:  |
-          New-AzAppServicePlan -ResourceGroupName 'testaz' -Name 'MyServicePlan' -Location 'southcentralus' -Linux -Tier 'F1' 
+          New-AzAppServicePlan -ResourceGroupName 'testaz' -Name 'ASP-testaz-bd534' -Location 'southcentralus' -Linux -Tier 'F1' 
         azurePowerShellVersion: 'LatestVersion'
 
     - task: AzurePowerShell@5
