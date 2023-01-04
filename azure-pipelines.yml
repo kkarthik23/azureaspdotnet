@@ -65,7 +65,7 @@ stages:
         azureSubscription: $(azureSubscription)
         ScriptType: 'InlineScript'
         Inline:  |
-          New-AzAppServicePlan -ResourceGroupName 'testaz' -Name 'ASP-testaz-bd534' -Location 'southcentralus' -Linux -Tier 'F1' 
+          New-AzAppServicePlan -ResourceGroupName 'testrguseast' -Name 'ASP-testaz-bd534' -Location 'East US' -Linux -Tier 'F1' 
         azurePowerShellVersion: 'LatestVersion'
 
     - task: AzurePowerShell@5
@@ -74,7 +74,7 @@ stages:
         azureSubscription: $(azureSubscription)
         ScriptType: 'InlineScript'
         Inline:  |
-            New-AzWebApp -ResourceGroupName 'testaz' -Name 'testazaspdotnet' -Location 'southcentralus' -AppServicePlan 'MyServicePlan'
+            New-AzWebApp -ResourceGroupName 'testrguseast' -Name 'testazaspdotnet' -Location 'East US' -AppServicePlan 'ASP-testaz-bd534'
         azurePowerShellVersion: 'LatestVersion'
 
     - task: AzureWebApp@1
