@@ -64,13 +64,15 @@ stages:
       inputs:
         azureSubscription: $(azureSubscription)
         ScriptType: 'InlineScript'
-        Inline:  New-AzAppServicePlan -ResourceGroupName 'testaz' -Name 'MyServicePlan' -Location 'southcentralus' -Linux -Tier 'F1' 
+        Inline:  |
+          New-AzAppServicePlan -ResourceGroupName 'testaz' -Name 'MyServicePlan' -Location 'southcentralus' -Linux -Tier 'F1' 
     - task: AzurePowerShell@5
       displayName: 'Create Web App'
       inputs:
         azureSubscription: $(azureSubscription)
         ScriptType: 'InlineScript'
-        Inline:  New-AzWebApp -ResourceGroupName 'testaz' -Name 'testazaspdotnet' -Location 'southcentralus' -AppServicePlan 'MyServicePlan'
+        Inline:  |
+            New-AzWebApp -ResourceGroupName 'testaz' -Name 'testazaspdotnet' -Location 'southcentralus' -AppServicePlan 'MyServicePlan'
         
 
     - task: AzureWebApp@1
