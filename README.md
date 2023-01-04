@@ -7,10 +7,15 @@ provide the sonar cloud token
 ---
 
 - task: SnykSecurityScan@0
+
   inputs:
+  
     serviceConnectionEndpoint: 'snykToken'
+    
     testType: 'app'
+    
     monitorWhen: 'always'
+    
     failOnIssues: true
 
 ---
