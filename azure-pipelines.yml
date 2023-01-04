@@ -66,6 +66,8 @@ stages:
         ScriptType: 'InlineScript'
         Inline:  |
           New-AzAppServicePlan -ResourceGroupName 'testaz' -Name 'MyServicePlan' -Location 'southcentralus' -Linux -Tier 'F1' 
+        azurePowerShellVersion: 'LatestVersion'
+
     - task: AzurePowerShell@5
       displayName: 'Create Web App'
       inputs:
@@ -73,7 +75,7 @@ stages:
         ScriptType: 'InlineScript'
         Inline:  |
             New-AzWebApp -ResourceGroupName 'testaz' -Name 'testazaspdotnet' -Location 'southcentralus' -AppServicePlan 'MyServicePlan'
-        
+        azurePowerShellVersion: 'LatestVersion'
 
     - task: AzureWebApp@1
       inputs:
