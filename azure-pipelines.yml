@@ -62,6 +62,12 @@ stages:
         publishWebProjects: True
         arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
         zipAfterPublish: True
+    - task: AzureCLI@2
+      inputs:
+          azureSubscription: $(azureSubscription)
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'ls $(Build.ArtifactStagingDirectory)'
     - task: AzurePowerShell@5
       displayName: 'Create App Service'
       inputs:
