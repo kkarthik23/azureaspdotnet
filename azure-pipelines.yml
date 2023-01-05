@@ -57,12 +57,14 @@ stages:
       displayName: 'dotnet build $(buildConfiguration)'
     
     - task: DotNetCoreCLI@2
+      displayName: 'publish zip'
       inputs:
         command: publish
         publishWebProjects: True
         arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
         zipAfterPublish: True
     - task: AzureCLI@2
+      displayName: 'List directory'
       inputs:
           azureSubscription: $(azureSubscription)
           scriptType: 'bash'
