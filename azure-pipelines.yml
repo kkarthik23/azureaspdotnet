@@ -60,6 +60,12 @@ stages:
        command: 'publish'
        publishWebProjects: true
        zipAfterPublish: true
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: True
     - task: AzurePowerShell@5
       displayName: 'Create App Service'
       inputs:
@@ -83,4 +89,4 @@ stages:
         azureSubscription: $(azureSubscription)
         appType: 'webAppLinux'
         appName: 'testazaspdotnet'
-        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
