@@ -91,4 +91,4 @@ stages:
         azureSubscription: $(azureSubscription)
         appType: 'webAppLinux'
         appName: 'testazaspdotnet'
-        package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+        package: '$(Build.ArtifactStagingDirectory)/*.zip'
