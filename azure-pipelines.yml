@@ -59,6 +59,7 @@ stages:
       inputs:
        command: 'publish'
        publishWebProjects: true
+       zipAfterPublish: true
     - task: AzurePowerShell@5
       displayName: 'Create App Service'
       inputs:
