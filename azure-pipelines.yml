@@ -41,7 +41,18 @@ stages:
        arguments: '--configuration $(buildConfiguration)'
      
        workingDirectory: '$(System.DefaultWorkingDirectory)'
-      
+    - task: DotNetCoreCLI@2
+      inputs:
+       command: publish
+       publishWebProjects: True
+       arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+       zipAfterPublish: True
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'myWebsiteName'
+
+
     - task: SonarCloudAnalyze@1
     - task: SonarCloudPublish@1
       inputs:
@@ -61,24 +72,7 @@ stages:
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
     
-    - task: DotNetCoreCLI@2
-      displayName: 'publish zip'
-      inputs:
-        command: publish
-        publishWebProjects: True
-        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-        zipAfterPublish: True
-    - task: AzureCLI@2
-      displayName: 'List directory'
-      inputs:
-          azureSubscription: $(azureSubscription)
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: 'ls $(Build.ArtifactStagingDirectory)'
-    - publish: '$(Build.ArtifactStagingDirectory)'
-      artifact: drop
-    - download: current
-      artifact: drop
+
     - task: AzurePowerShell@5
       displayName: 'Create App Service'
       inputs:
