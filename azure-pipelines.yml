@@ -47,10 +47,9 @@ stages:
        publishWebProjects: True
        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
        zipAfterPublish: True
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)' 
-        artifactName: 'myWebsiteName'
+    - publish: '$(Build.ArtifactStagingDirectory)'
+      artifact: drop
+
 
 
     - task: SonarCloudAnalyze@1
@@ -71,6 +70,8 @@ stages:
     steps:
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
+    - download: current
+      artifact: drop
     
 
     - task: AzurePowerShell@5
@@ -90,11 +91,11 @@ stages:
         Inline:  |
             New-AzWebApp -ResourceGroupName 'testrguseast' -Name 'testazaspdotnet' -Location 'East US' -AppServicePlan 'ASP-testaz-bd534'
         azurePowerShellVersion: 'LatestVersion'
-
+    
     - task: AzureWebApp@1
       inputs:
         azureSubscription: $(azureSubscription)
         appType: 'webAppLinux'
         appName: 'testazaspdotnet'
         
-        package: '$(Build.ArtifactStagingDirectory)/*.zip'
+        package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
