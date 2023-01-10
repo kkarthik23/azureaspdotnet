@@ -99,4 +99,4 @@ stages:
         appType: 'webAppLinux'
         appName: 'testazaspdotnet'
         
-        package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+        package: '$(Build.ArtifactStagingDirectory)/*.zip'
