@@ -18,10 +18,7 @@ stages:
   - job: build  
     pool:
       vmImage: ubuntu-latest
-      environment: dev
-
     steps:
-    
     - checkout: self
       path: s/azureaspdotnet   
 
@@ -31,8 +28,6 @@ stages:
         SonarCloud: 'SonarCloud'
         organization: kk
         projectKey: dottest
-    
-
     - task: DotNetCoreCLI@2
       inputs:
        command: 'build'
@@ -43,19 +38,15 @@ stages:
       inputs:
        command: publish
        publishWebProjects: True
-       arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
-        
+       arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)' 
        zipAfterPublish: True
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
-
-
 
     - task: SonarCloudAnalyze@1
     - task: SonarCloudPublish@1
       inputs:
         pollingTimeoutSec: '300'
-
 
 - stage: Deploy
   displayName: 'Deploy Web App'
@@ -66,18 +57,12 @@ stages:
     pool:
       vmImage: ubuntu-latest
       environment: dev
-
     steps:
     - download: current
-      artifact: drop
-    
-
-    
-    
+      artifact: drop 
     - task: AzureWebApp@1
       inputs:
         azureSubscription: $(azureSubscription)
         appType: 'webAppLinux'
         appName: 'testazaspdotnet'
-        
         package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
