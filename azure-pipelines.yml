@@ -22,8 +22,10 @@ stages:
 
     steps:
     - script: echo Hello, world!
-      displayName: 'Run a one-line script'
-      # Prepare Analysis Configuration task
+      displayName: 'Run a one-line script'  
+    - checkout: self
+      path: s/azureaspdotnet   
+
     - task: SonarCloudPrepare@1
       inputs:
         scannerMode: 'MSBuild'
@@ -35,7 +37,9 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
        command: 'build'
-       projects: '**/*.csproj'
+       
+       arguments: '--configuration $(buildConfiguration)'
+     
        workingDirectory: '$(System.DefaultWorkingDirectory)'
       
     - task: SonarCloudAnalyze@1
